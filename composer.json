@@ -1,0 +1,55 @@
+{
+  "name": "eziat/sql-report-bundle",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "keywords": [
+    "Sql report"
+  ],
+  "authors": [
+    {
+      "name": "Eziat community"
+    },
+    {
+      "name": "Tomas Jakl",
+      "email": "tomasjakll@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.1.0",
+    "doctrine/doctrine-bundle": "^1.8",
+    "doctrine/orm": "^2.6",
+    "symfony/config": "^3.4|^4.0",
+    "symfony/dependency-injection": "^3.4|^4.0",
+    "symfony/expression-language": "^4.0",
+    "symfony/framework-bundle": "^3.4|^4.0",
+    "symfony/http-kernel": "^3.4|^4.0",
+    "symfony/twig-bundle": "^4.0",
+    "symfony/form": "^3.4|^4.0",
+    "liuggio/excelbundle": "~2.1",
+    "tecnickcom/tcpdf": "~6.0",
+    "knplabs/knp-snappy-bundle": "^1.5"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.8",
+    "symfony/phpunit-bridge": "^3.4|^4.0"
+  },
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Eziat\\SqlReportBundle\\": "src/"
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Eziat\\SqlReportBundle\\Tests\\": "tests/"
+    }
+  }
+}

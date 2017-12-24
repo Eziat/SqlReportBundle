@@ -1,0 +1,63 @@
+{% extends '@EziatSqlReport/layout.html.twig' %}
+
+{% block eziat_sql_report_content %}
+    {% set reportgroups = sqlReport.reportGroup|split('_') %}
+
+    {% for gr in reportgroups %}
+        <a href="{{ path("eziat_sql_report_list") }}#{{ gr }}">{{ gr }}</a>
+    {% endfor %}
+
+    <h3>{{ sqlReport.title }}</h3>
+
+    {% if not printView %}
+        <a href="{{ path("eziat_sql_report_list") }}">Back to list</a> &nbsp;&nbsp; | &nbsp;
+            <a href="{{ path("eziat_sql_report_edit", {'id': sqlReport.id }) }}">Edit</a> &nbsp;&nbsp; | &nbsp;
+        Export as:
+        {% for exportType in exportTypes %}
+            <a href="{{ path("eziat_sql_report_export", {'id': sqlReport.id, 'exportType': exportType}) }}">{{ exportType }}</a>
+            &nbsp;
+        {% endfor %}
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{{ path("eziat_sql_report_show", {'id': sqlReport.id, 'printView' : true }) }}">Print View</a>
+        &nbsp;
+        <a href="{{ path("eziat_sql_report_pdf", {'id': sqlReport.id, 'printView' : true}) }}">Show whole page as PDF</a>
+        <a href="{{ path("eziat_sql_report_pdf", {'id': sqlReport.id, 'printView' : true, 'pdfOrientation' : 'landscape'}) }}">(landscape)</a>
+        <br /><br />
+    {% endif %}
+
+    {% if sqlReport.description %}
+        <div style="float:left">Description: {{ sqlReport.description |raw }}</div>
+    {% endif %}
+
+    {% if printView %}
+        <div style="float:right">Print date: {{ 'now'| date('d/m/Y H:i') }}<br /></div>
+    {% endif %}
+    <div style="clear: both"></div>
+
+    {% if errMsg %}
+        <div class="error"> {{ errMsg }} </div>
+    {% endif %}
+
+    {% if resultSize is empty %}
+        Query did not return any rows from the database!
+    {% else %}
+        {{ resultSize }} rows found: <br /><br />
+
+        <table class="table table-condensed">
+            {% if headers %}
+                <tr>
+                    {% for headerTitle in headers %}
+                        <th><b>{{ headerTitle }}</b></th>
+                    {% endfor %}
+                </tr>
+            {% endif %}
+            {% for resultRow in result %}
+                <tr>
+                    {% for resultColumn in resultRow %}
+                        <td>{{ resultColumn|raw }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock eziat_sql_report_content %}

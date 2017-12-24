@@ -1,0 +1,13 @@
+{% extends '@EziatSqlReport/layout.html.twig' %}
+
+{% block eziat_sql_report_content %}
+    <a href="{{ path("eziat_sql_report_list") }}">Back to list</a>
+    {% if entity.id %}
+        |
+        <a target="_blank" href="{{ path("eziat_sql_report_show", {'id': entity.id}) }}">Show result</a>
+        <br /><br />
+    {% endif %}
+    <br /><br />
+
+    {{ form(form) }}
+{% endblock eziat_sql_report_content %}

@@ -1,0 +1,44 @@
+{% extends '@EziatSqlReport/layout.html.twig' %}
+
+{% block eziat_sql_report_content %}
+    <a href="{{ path("eziat_sql_report_edit", {'id': 0}) }}">
+        Create new report
+    </a>
+    <br /><br />
+
+    {% if groupedReportsArray is empty %}
+        No entries found.
+    {% else %}
+        {% for reportGroup, subgroupReports in groupedReportsArray %}
+            <h2>
+                <a name="{{ reportGroup }}"></a>
+                <b>{{ reportGroup }}</b></h2>
+            {% for subGroup, sqlRports in subgroupReports %}
+                <h3>
+                    <a name="{{ subGroup }}"></a>{{ subGroup }}</h3>
+                <table class="table">
+                    <tr>
+                        <th width="25%">Title</th>
+                        <th width="50%">Description</th>
+                        <th width="25%">Actions</th>
+                    </tr>
+                    {% for sqlReport in sqlRports %}
+                        <tr>
+                            <td>
+                                <strong style="{{ sqlReport.active  ? "" : "text-decoration: line-through" }}">
+                                    {{ sqlReport.title }}
+                                </strong>
+                            </td>
+                            <td>{{ sqlReport.description |raw }}</td>
+                            <td>
+                                <a href="{{ path("eziat_sql_report_show", {"id": sqlReport.id}) }}">Show</a>
+                                    |
+                                    <a href="{{ path("eziat_sql_report_edit", {"id": sqlReport.id}) }}">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+{% endblock eziat_sql_report_content %}

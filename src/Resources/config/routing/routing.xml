@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="eziat_sql_report_list" path="/sql-report" methods="GET">
+        <default key="_controller">Eziat\SqlReportBundle\Controller\SqlReportController::listAction</default>
+    </route>
+
+    <route id="eziat_sql_report_edit" path="/sql-report/edit/{id}" methods="GET POST">
+        <requirement key="id">\d+</requirement>
+        <default key="_controller">Eziat\SqlReportBundle\Controller\SqlReportController::editAction</default>
+    </route>
+
+    <route id="eziat_sql_report_show" path="/sql-report/{id}" methods="GET">
+        <requirement key="id">\d+</requirement>
+        <default key="_controller">Eziat\SqlReportBundle\Controller\SqlReportController::showAction</default>
+    </route>
+
+    <route id="eziat_sql_report_pdf" path="/sql-report/pdf/{id}" methods="GET">
+        <default key="_controller">Eziat\SqlReportBundle\Controller\SqlReportController::showAction</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="eziat_sql_report_export" path="/sql-report/export/{id}/exportType/{exportType}" methods="GET">
+        <requirement key="id">\d+</requirement>
+        <default key="_controller">Eziat\SqlReportBundle\Controller\SqlReportController::exportAction</default>
+    </route>
+
+</routes>

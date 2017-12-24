@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+        http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="Eziat\SqlReportBundle\Entity\SqlReport">
+
+        <field name="title" column="title" type="string" length="64" unique="true"/>
+
+        <field name="description" column="description" type="text" nullable="true"/>
+
+        <field name="query" column="query" type="text"/>
+
+        <field name="headers" column="headers" type="text" nullable="true"/>
+
+        <field name="projection" column="projection" type="text" nullable="true"/>
+
+        <field name="type" column="type" type="integer"/>
+
+        <field name="reportGroup" column="report_group" type="string" length="128" nullable="true"/>
+
+        <field name="sortBy" column="sort_by" type="integer"/>
+
+        <field name="active" column="active" type="boolean"/>
+
+    </mapped-superclass>
+
+</doctrine-mapping>
