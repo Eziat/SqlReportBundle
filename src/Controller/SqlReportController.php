@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Eziat\SqlReportBundle\Controller;
 
@@ -126,7 +126,7 @@ class SqlReportController extends AbstractController
         return $pdfHelper->getPdfResponse($htmlContent, $request->query->all(), $filename);
     }
 
-    public function exportAction(int $id, string $exportType )
+    public function exportAction(int $id, string $exportType)
     {
         /** @var SqlReport $sqlReport */
         $sqlReport = $this->sqlReportManager->findSqlReportById($id);
@@ -140,7 +140,7 @@ class SqlReportController extends AbstractController
         array_unshift($resultArray, $headers);
         /* @var $phpExcelObject PHPExcel */
         $phpExcelObject->setActiveSheetIndex(0)
-                       ->fromArray($resultArray);
+                        ->fromArray($resultArray);
 
         $contentType = SqlReport::$CONTENT_TYPES[$exportType];
 
@@ -155,7 +155,7 @@ class SqlReportController extends AbstractController
         $response->headers->set('Content-Type', "$contentType; charset=utf-8");
         $response->headers->set(
             'Content-Disposition', 'attachment; filename="'
-                                   .$sqlReport->getFileName($exportType).'"');
+                                    .$sqlReport->getFileName($exportType).'"');
         $response->headers->set('Pragma', 'public');
         $response->headers->set('Cache-Control', 'maxage=1');
 

@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Eziat\SqlReportBundle\Entity;
 
@@ -13,7 +13,7 @@ abstract class SqlReport implements SqlReportInterface
     const SQL = 0;
     const DQL = 1;
 
-    public static $EXPORT_TYPES    = [
+    public static $EXPORT_TYPES = [
         'CSV'        => 'CSV',
         'Excel 5'    => 'Excel5',
         'Excel 2007' => 'Excel2007',
@@ -28,7 +28,7 @@ abstract class SqlReport implements SqlReportInterface
         'CSV'       => 'csv',
         'PDF'       => 'pdf',
     ];
-    public static $CONTENT_TYPES   = [
+    public static $CONTENT_TYPES = [
         'OOCalc'    => "ods",
         'Excel5'    => "text/vnd.ms-excel",
         'Excel2007' => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
