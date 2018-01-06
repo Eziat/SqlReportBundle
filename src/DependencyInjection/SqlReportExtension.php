@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Eziat\SqlReportBundle\DependencyInjection;
 
@@ -22,11 +22,12 @@ class SqlReportExtension extends Extension
     {
         $processor     = new Processor();
         $configuration = new Configuration();
+        $loader        = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $config        = $processor->processConfiguration($configuration, $configs);
 
         $container->setParameter('eziat_sql_report.sql_report_class', $config['sql_report_class']);
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('manager.xml');
+        $loader->load('controllers.xml');
 
         $container->setAlias('Eziat\SqlReportBundle\Manager\SqlReportManagerInterface', new Alias('eziat_sql_report.user_manager.default', false));
     }

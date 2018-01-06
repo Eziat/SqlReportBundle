@@ -5,21 +5,16 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+
         <service id="eziat_sql_report.user_manager.default" class="Eziat\SqlReportBundle\Manager\Doctrine\SqlReportManager" public="false">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument>%eziat_sql_report.sql_report_class%</argument>
         </service>
 
-        <service id="Eziat\SqlReportBundle\Controller\SqlReportController" public="false">
-            <argument type="service"
-                      id="Symfony\Component\EventDispatcher\EventDispatcherInterface"/>
-            <argument type="service" id="eziat_sql_report.user_manager.default"/>
-            <tag name="controller.service_arguments"/>
-        </service>
-
         <service id="Eziat\SqlReportBundle\Helper\SqlReportHelper" public="false">
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
         </service>
+
     </services>
 
 </container>
