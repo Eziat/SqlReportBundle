@@ -17,7 +17,7 @@
   "require": {
     "php": "^7.1.0",
     "doctrine/doctrine-bundle": "^1.8",
-    "doctrine/orm": "^2.6",
+    "doctrine/orm": "^2.5",
     "symfony/config": "^3.4|^4.0",
     "symfony/dependency-injection": "^3.4|^4.0",
     "symfony/expression-language": "^4.0",
