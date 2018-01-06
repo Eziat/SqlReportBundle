@@ -39,39 +39,39 @@ abstract class SqlReport implements SqlReportInterface
     /**
      * @var string
      */
-    private $title = '';
+    protected $title = '';
     /**
      * @var string
      */
-    private $description = '';
+    protected $description = '';
     /**
      * @var string
      */
-    private $query = '';
+    protected $query = '';
     /**
      * @var string
      */
-    private $headers = '';
+    protected $headers = '';
     /**
      * @var string
      */
-    private $projection = '';
+    protected $projection = '';
     /**
      * @var integer
      */
-    private $type = 0;
+    protected $type = 0;
     /**
      * @var string
      */
-    private $reportGroup = '';
+    protected $reportGroup = '';
     /**
      * @var integer
      */
-    private $sortBy = 0;
+    protected $sortBy = 0;
     /**
      * @var boolean
      */
-    private $active;
+    protected $active;
 
     public function __construct()
     {
