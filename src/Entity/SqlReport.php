@@ -37,10 +37,6 @@ abstract class SqlReport implements SqlReportInterface
         'PDF'       => 'application/pdf',
     ];
     /**
-     * @var mixed
-     */
-    private $id;
-    /**
      * @var string
      */
     private $title = '';
@@ -80,14 +76,6 @@ abstract class SqlReport implements SqlReportInterface
     public function __construct()
     {
         $this->active = true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
