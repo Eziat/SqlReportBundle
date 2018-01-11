@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 /**
  * @author Tomas
  */
-class SqlReportExtension extends Extension
+class EziatSqlReportExtension extends Extension
 {
     /**
      * {@inheritdoc}

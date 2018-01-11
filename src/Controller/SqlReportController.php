@@ -11,7 +11,7 @@ use Eziat\SqlReportBundle\Event\ListSqlReportEvent;
 use Eziat\SqlReportBundle\Event\SqlReportEvent;
 use Eziat\SqlReportBundle\Form\SqlReportType;
 use Eziat\SqlReportBundle\Helper\PdfHelper;
-use Eziat\SqlReportBundle\Helper\EziatSqlReportHelper;
+use Eziat\SqlReportBundle\Helper\SqlReportHelper;
 use Eziat\SqlReportBundle\Manager\SqlReportManager;
 use PHPExcel;
 use PHPExcel_Settings;
@@ -89,7 +89,7 @@ class SqlReportController extends AbstractController
         ]);
     }
 
-    public function showAction(Request $request, int $id, EziatSqlReportHelper $sqlReportHelper)
+    public function showAction(Request $request, int $id, SqlReportHelper $sqlReportHelper)
     {
         /** @var SqlReport $sqlReport */
         $sqlReport = $this->sqlReportManager->findSqlReportById($id);
@@ -110,7 +110,7 @@ class SqlReportController extends AbstractController
         ]);
     }
 
-    public function pdfAction(Request $request, int $id, EziatSqlReportHelper $helper, PdfHelper $pdfHelper)
+    public function pdfAction(Request $request, int $id, SqlReportHelper $helper, PdfHelper $pdfHelper)
     {
         /** @var SqlReport $sqlReport */
         $sqlReport = $this->sqlReportManager->findSqlReportById($id);
@@ -134,7 +134,7 @@ class SqlReportController extends AbstractController
         $event = new SqlReportEvent($sqlReport);
         $this->eventDispatcher->dispatch(EziatSqlReportEvents::SQL_REPORT_EXPORT_INITIALIZE, $event);
 
-        list($resultArray, $headers, $errMsg) = $this->get(EziatSqlReportHelper::class)->getQueryResult($sqlReport);
+        list($resultArray, $headers, $errMsg) = $this->get(SqlReportHelper::class)->getQueryResult($sqlReport);
 
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
         array_unshift($resultArray, $headers);

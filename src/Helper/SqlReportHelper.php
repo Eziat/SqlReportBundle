@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ExpressionLanguage;
 /**
  * @author Martin
  */
-class EziatSqlReportHelper
+class SqlReportHelper
 {
     /**
      * @var EntityManagerInterface
