@@ -33,10 +33,14 @@ class SqlReportController extends AbstractController
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher, SqlReportManager $sqlReportManager)
+    /** @var string */
+    private $projectDir;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher, SqlReportManager $sqlReportManager, string $projectDir)
     {
         $this->sqlReportManager = $sqlReportManager;
         $this->eventDispatcher  = $eventDispatcher;
+        $this->projectDir = $projectDir;
     }
 
     public function listAction()
@@ -173,7 +177,7 @@ class SqlReportController extends AbstractController
     private function _initOfficePdfExorter()
     {
         $rendererName        = PHPExcel_Settings::PDF_RENDERER_TCPDF;
-        $rendererLibraryPath = $this->dirname(__FILE__).'/../../../../vendor/tecnick.com/tcpdf';
+        $rendererLibraryPath = $this->projectDir.'/vendor/tecnickcom/tcpdf';
 
         if (!PHPExcel_Settings::setPdfRenderer($rendererName, $rendererLibraryPath)) {
             die("Renderer not found at".$rendererLibraryPath);

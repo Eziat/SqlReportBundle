@@ -10,6 +10,7 @@
             <argument type="service"
                       id="Symfony\Component\EventDispatcher\EventDispatcherInterface"/>
             <argument type="service" id="eziat_sql_report.user_manager.default"/>
+            <argument>%kernel.project_dir%</argument>
             <tag name="controller.service_arguments"/>
         </service>
 
