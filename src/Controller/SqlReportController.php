@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Eziat\SqlReportBundle\Controller;
 
@@ -13,14 +13,14 @@ use Eziat\SqlReportBundle\Form\SqlReportType;
 use Eziat\SqlReportBundle\Helper\PdfHelper;
 use Eziat\SqlReportBundle\Helper\SqlReportHelper;
 use Eziat\SqlReportBundle\Manager\SqlReportManager;
-use PHPExcel;
-use PHPExcel_Settings;
-use PHPExcel_Worksheet_PageSetup;
-use PHPExcel_Writer_PDF_tcPDF;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\IWriter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @author Tomas
@@ -40,7 +40,7 @@ class SqlReportController extends AbstractController
     {
         $this->sqlReportManager = $sqlReportManager;
         $this->eventDispatcher  = $eventDispatcher;
-        $this->projectDir = $projectDir;
+        $this->projectDir       = $projectDir;
     }
 
     public function listAction()
@@ -130,7 +130,7 @@ class SqlReportController extends AbstractController
         return $pdfHelper->getPdfResponse($htmlContent, $request->query->all(), $filename);
     }
 
-    public function exportAction(int $id, string $exportType )
+    public function exportAction(int $id, string $exportType)
     {
         /** @var SqlReport $sqlReport */
         $sqlReport = $this->sqlReportManager->findSqlReportById($id);
@@ -140,22 +140,21 @@ class SqlReportController extends AbstractController
 
         list($resultArray, $headers, $errMsg) = $this->get(SqlReportHelper::class)->getQueryResult($sqlReport);
 
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+        $phpExcelObject = new Spreadsheet();
+
         array_unshift($resultArray, $headers);
-        /* @var $phpExcelObject PHPExcel */
         $phpExcelObject->setActiveSheetIndex(0)
                        ->fromArray($resultArray);
 
         $contentType = SqlReport::$CONTENT_TYPES[$exportType];
 
         if ($exportType == "PDF") {
-            $this->_initOfficePdfExorter();
-            $objWriter = new PHPExcel_Writer_PDF_tcPDF($phpExcelObject);
+            $objWriter = IOFactory::createWriter($phpExcelObject, 'Tcpdf');
             $objWriter->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A3);
         } else {
-            $objWriter = $this->get('phpexcel')->createWriter($phpExcelObject, $exportType);
+            $objWriter = IOFactory::createWriter($phpExcelObject, $exportType);
         }
-        $response = $this->get('phpexcel')->createStreamedResponse($objWriter);
+        $response = $this->createStreamedResponse($objWriter);
         $response->headers->set('Content-Type', "$contentType; charset=utf-8");
         $response->headers->set(
             'Content-Disposition', 'attachment; filename="'
@@ -173,14 +172,17 @@ class SqlReportController extends AbstractController
             'method' => 'POST',
         ]);
     }
-
-    private function _initOfficePdfExorter()
+     /**
+     * Stream the file as Response.
+     */
+    public function createStreamedResponse(IWriter $writer, int $status = 200, array $headers = array()) : StreamedResponse
     {
-        $rendererName        = PHPExcel_Settings::PDF_RENDERER_TCPDF;
-        $rendererLibraryPath = $this->projectDir.'/vendor/tecnickcom/tcpdf';
-
-        if (!PHPExcel_Settings::setPdfRenderer($rendererName, $rendererLibraryPath)) {
-            die("Renderer not found at".$rendererLibraryPath);
-        }
+        return new StreamedResponse(
+            function () use ($writer) {
+                $writer->save('php://output');
+            },
+            $status,
+            $headers
+        );
     }
 }
