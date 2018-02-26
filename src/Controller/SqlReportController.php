@@ -130,7 +130,16 @@ class SqlReportController extends AbstractController
         return $pdfHelper->getPdfResponse($htmlContent, $request->query->all(), $filename);
     }
 
-    public function exportAction(int $id, string $exportType)
+    /**
+     * @param int    $id
+     * @param string $exportType
+     *
+     * @return StreamedResponse
+     * @throws \Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
+    public function exportAction(int $id, string $exportType, SqlReportHelper $sqlReportHelper)
     {
         /** @var SqlReport $sqlReport */
         $sqlReport = $this->sqlReportManager->findSqlReportById($id);
@@ -138,7 +147,7 @@ class SqlReportController extends AbstractController
         $event = new SqlReportEvent($sqlReport);
         $this->eventDispatcher->dispatch(EziatSqlReportEvents::SQL_REPORT_EXPORT_INITIALIZE, $event);
 
-        list($resultArray, $headers, $errMsg) = $this->get(SqlReportHelper::class)->getQueryResult($sqlReport);
+        list($resultArray, $headers, $errMsg) = $sqlReportHelper->getQueryResult($sqlReport);
 
         $phpExcelObject = new Spreadsheet();
 
@@ -150,7 +159,6 @@ class SqlReportController extends AbstractController
 
         if ($exportType == "PDF") {
             $objWriter = IOFactory::createWriter($phpExcelObject, 'Tcpdf');
-            $objWriter->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A3);
         } else {
             $objWriter = IOFactory::createWriter($phpExcelObject, $exportType);
         }
@@ -172,6 +180,7 @@ class SqlReportController extends AbstractController
             'method' => 'POST',
         ]);
     }
+
      /**
      * Stream the file as Response.
      */
