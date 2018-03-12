@@ -157,11 +157,7 @@ class SqlReportController extends AbstractController
 
         $contentType = SqlReport::$CONTENT_TYPES[$exportType];
 
-        if ($exportType == "PDF") {
-            $objWriter = IOFactory::createWriter($phpExcelObject, 'Tcpdf');
-        } else {
-            $objWriter = IOFactory::createWriter($phpExcelObject, $exportType);
-        }
+        $objWriter = IOFactory::createWriter($phpExcelObject, SqlReport::$EXPORT_TYPES[$exportType]);
         $response = $this->createStreamedResponse($objWriter);
         $response->headers->set('Content-Type', "$contentType; charset=utf-8");
         $response->headers->set(

@@ -14,27 +14,28 @@ abstract class SqlReport implements SqlReportInterface
     const DQL = 1;
 
     public static $EXPORT_TYPES    = [
-        'CSV'        => 'CSV',
-        'Excel 5'    => 'Excel5',
-        'Excel 2007' => 'Excel2007',
-        'HTML'       => 'HTML',
-        'PDF'        => 'PDF',
+        'CSV'  => 'Csv',
+        'Excel5'  => 'Xls',
+        'Excel2007' => 'Xlsx',
+        'ODS'  => 'Ods',
+        'HTML' => 'Html',
+        'PDF'  => 'Tcpdf',
     ];
     public static $FILE_EXTENSIONS = [
-        'OOCalc'    => "ods",
-        'Excel5'    => "xls",
-        'Excel2007' => "xlsx",
-        'HTML'      => 'html',
-        'CSV'       => 'csv',
-        'PDF'       => 'pdf',
+        'CSV'  => 'csv',
+        'Excel5'  => 'xls',
+        'Excel2007' => 'xlsx',
+        'ODS'  => 'ods',
+        'HTML' => 'html',
+        'PDF'  => 'pdf',
     ];
     public static $CONTENT_TYPES   = [
-        'OOCalc'    => "ods",
-        'Excel5'    => "text/vnd.ms-excel",
+        'CSV'  => 'text/csv',
+        'ODS'  => "ods",
+        'Excel5'  => "text/vnd.ms-excel",
         'Excel2007' => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        'HTML'      => 'text/html',
-        'CSV'       => 'text/csv',
-        'PDF'       => 'application/pdf',
+        'HTML' => 'text/html',
+        'PDF'  => 'application/pdf',
     ];
     /**
      * @var string

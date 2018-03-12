@@ -13,7 +13,7 @@
         <a href="{{ path("eziat_sql_report_list") }}">Back to list</a> &nbsp;&nbsp; | &nbsp;
             <a href="{{ path("eziat_sql_report_edit", {'id': sqlReport.id }) }}">Edit</a> &nbsp;&nbsp; | &nbsp;
         Export as:
-        {% for exportType in exportTypes %}
+        {% for exportType, value in exportTypes %}
             <a href="{{ path("eziat_sql_report_export", {'id': sqlReport.id, 'exportType': exportType}) }}">{{ exportType }}</a>
             &nbsp;
         {% endfor %}
