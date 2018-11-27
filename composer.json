@@ -19,7 +19,7 @@
     "doctrine/doctrine-bundle": "^1.8",
     "doctrine/orm": "^2.5",
     "knplabs/knp-snappy-bundle": "^1.5",
-    "phpoffice/phpspreadsheet": "^1.1",
+    "phpoffice/phpspreadsheet": "^1.5.1",
     "symfony/config": "^3.4|^4.0",
     "symfony/dependency-injection": "^3.4|^4.0",
     "symfony/expression-language": "^3.4|^4.0",
